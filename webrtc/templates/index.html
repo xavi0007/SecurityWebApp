@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+    <html>
+        <head>
+          <h1> On to start teleconferencing </h1>
+        </head>
+         <body>
+           <button type = "button" name = "startServer" id = "startServer"
+           onclick="location.href='{% url 'start' %}'">Start teleconferencing server</button>
+           <button type = "button" name = "stopServer" id = "stopServer"
+           onclick="location.href='{% url 'stop' %}'">Stop teleconferencing server</button>
+
+           <p id="link" >Click on start teleconferencing server button to start</p>
+        </body>
+        {% load static %}
+        <script src="{% static '/js/main.js' %}"></script>
+    </html>

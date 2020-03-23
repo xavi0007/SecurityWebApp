@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<script src="js/rtc.js"></script>
+
+<html>
+
+    <style>
+
+        .center {
+          margin-left: auto;
+          margin-right: auto;
+          width: 80%;
+        }
+        body {
+          text-align: center;
+          background-repeat: repeat-x;
+        }
+
+        h1 {
+          text-align: center;
+          margin: auto;
+          color: white;
+      }
+
+      </style>
+
+    <head>
+        <title>
+            Home Page
+        </title>
+    </head>
+    <body>
+        <a class="btn" href="/monitor/"> view camera</a>
+        <br>
+        <button type = "startMQTT" name = "startMQTT"
+        class="btn btn-warning" style="color: black" id = "startMQTT"
+        onclick="location.href='{% url 'script' %}'">Start MQTT</button> <hr>
+        {% if data %}
+
+        {{data}}
+
+        {% endif %}
+
+    </body>
+  </html>
