@@ -1,16 +1,25 @@
 <!DOCTYPE HTML>
     <html>
         <head>
-            <link rel="stylesheet" type="text/css" href="/Users/xavier/Programming/WebRTC/open-easyrtc/api/easyrtc.css" />
+            <link rel="stylesheet" type="text/css" href="css/easyrtc.css" />
             <script src="/socket.io/socket.io.js"></script>
             <script type="text/javascript" src="js/easyrtc.js"></script>
-            <script type="text/javascript" src="js/mylogic.js"></script>
+            <script type="text/javascript" src="js/easyrtc_recorder.js"></script>
+            <script type="text/javascript" src="js/main.js"></script>
         </head>
-         <body onload="my_init()">
+         <body onload="init()">
             <div id="otherClients"> </div>
             <video style="float:left" id="self" width="300" height="200" autoplay="autoplay" playsinline="playsinline"></video>
             <div style="position:relative;float:left;width:300px">
                 <video id="caller" width="300" height="200" autoplay="autoplay" playsinline="playsinline"></video>
+            </div>
+            <div id="recordButtons">
+                <br>
+                <button id="startRecording" onclick="startRecording();" >Start recording</button>
+                <button id="stopRecording" disabled="disabled" onclick="endRecording();" >End/finish recording</button>
+               <br>
+               download links for videos: self:<a id="selfDownloadLink"></a>
+                &nbsp;&nbsp;caller:<a id="callerDownloadLink"></a>
             </div>
         </body>
     </html>
