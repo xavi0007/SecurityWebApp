@@ -6,8 +6,8 @@
             <script src="/socket.io/socket.io.js"></script>
             <script type="text/javascript" src="js/easyrtc.js"></script>
             <script type="text/javascript" src="js/easyrtc_recorder.js"></script>
-            <script type="text/javascript" src="js/demo_data_channel_messaging.js"></script>
             <script type="text/javascript" src="js/main.js"></script>
+            <script type="text/javascript" src="js/demo_multistream.js"></script>
 
             <style type="text/css">
                 .alert img {
@@ -23,22 +23,67 @@
                     width:100%;
                 }
                 #conversation {
-                    height:300px;
+                    height:30px;
                     border:solid 1px gray;
                     overflow-y:scroll;
+                }
+                #demoContainer {
+                    position:relative;
+                }
+                #Controls {
+                    float:left;
+                    width:250px;
+                    text-align:center;
+                    border: 2px solid black;
+                }
+                #otherClients {
+                    height:50px;
+                    overflow-y:scroll;
+                }
+                #selfVideo {
+                    height:225px;
+                    width:300px;
+                    float:left;
+                    border:1px solid gray;
+                    margin-left:10px;
+                }
+                #callerVideo {
+                    height:225px;
+                    width:300px;
+                    border:1px solid gray;
+                    margin-left:10px;
+                }
+                #acceptCallBox {
+                    display:none;
+                    z-index:2;
+                    position:absolute;
+                    top:100px;
+                    left:400px;
+                    border:red solid 2px;
+                    background-color:pink;
+                    padding:15px;
                 }
             </style>
         </head>
          <body onload="init()">
             <div id="otherClients"> </div>
-
-            <video style="float:left" id="self" width="300" height="200" autoplay="autoplay" playsinline="playsinline"></video>
-
-            <div style="position:relative;float:left;width:300px">
-                <video id="caller" width="300" height="200" autoplay="autoplay" playsinline="playsinline"></video>
+            <br>
+            <div id="sendMessageArea">
+                <div id="iam">Your text here</div>
+                <textarea id="sendMessageText"></textarea>
             </div>
 
-            <div id="recordButtons">
+            <div id="receiveMessageArea">
+                Received Messages:
+                <div id="conversation"></div>
+            </div>
+
+            <br>
+            <video style="float:left" id="self" width="480" height="360" autoplay="autoplay" playsinline="playsinline"></video>
+            <video id="caller" width="480" height="360" autoplay="autoplay" playsinline="playsinline" ></video>
+            <br>
+
+            <div id="Controls">
                 <br>
                 <button id="startRecording" onclick="startRecording();" >Start recording</button>
                 <button id="stopRecording" disabled="disabled" onclick="endRecording();" >End/finish recording</button>
@@ -46,15 +91,6 @@
                download links for videos: self:<a id="selfDownloadLink"></a>
                 &nbsp;&nbsp;caller:<a id="callerDownloadLink"></a>
             </div>
-            <br>
-            <div id="sendMessageArea">
-                <div id="iam">Your text here</div>
-                <textarea id="sendMessageText"></textarea>
-                <div id="otherClients"></div>
-            </div>
-            <div id="receiveMessageArea">
-                Received Messages:
-                <div id="conversation"></div>
-            </div>
+            
         </body>
     </html>

@@ -7,7 +7,7 @@ var connectList = {};
 var channelIsActive = {}; // tracks which channels are active
 
 function init() {
-  if( !supportsRecording) {
+  if(!supportsRecording) {
     window.alert("This browser does not support recording.");
   }
   easyrtc.enableDataChannels(true);
@@ -39,24 +39,11 @@ function loggedInListener(roomName, otherPeers) {
       otherClientDiv.removeChild(otherClientDiv.lastChild);
   }
 
-  // for(var i in otherPeers) {
-  //     var button = document.createElement('button');
-  //     button.onclick = function(ID) {
-  //         return function() {
-  //             performCall(ID);
-  //         }
-  //     }(i);
-  //     label = document.createTextNode(i);
-  //     button.appendChild(label);
-  //     otherClientDiv.appendChild(button);
-  // }
-
   var label, button;
   for (var id in connectList) {
-      var rowGroup = document.createElement("span");
-      var rowLabel = document.createTextNode(easyrtc.idToName(id));
-      rowGroup.appendChild(rowLabel);
 
+      var rowGroup = document.createElement("span");
+      //Button to Call
       button = document.createElement('button');
       button.id = "connect_" + id;
       button.onclick = function(id) {
@@ -64,10 +51,11 @@ function loggedInListener(roomName, otherPeers) {
               performCall(id);
           };
       }(id);
-      label = document.createTextNode("Connect");
+      label = document.createTextNode("Call " + easyrtc.idToName(id));
       button.appendChild(label);
       rowGroup.appendChild(button);
 
+      //Button to send message
       button = document.createElement('button');
       button.id = "send_" + id;
       button.onclick = function(id) {
@@ -75,6 +63,7 @@ function loggedInListener(roomName, otherPeers) {
               sendStuffP2P(id);
           };
       }(id);
+
       label = document.createTextNode("Send Message");
       button.appendChild(label);
       rowGroup.appendChild(button);
@@ -82,7 +71,7 @@ function loggedInListener(roomName, otherPeers) {
       updateButtonState(id);
   }
   if (!otherClientDiv.hasChildNodes()) {
-      otherClientDiv.innerHTML = "<em>Nobody else logged in to talk to...</em>";
+      otherClientDiv.innerHTML = "<em>No one is available</em>";
   }
 }
 
@@ -95,6 +84,8 @@ function closeListener(otherParty) {
   channelIsActive[otherParty] = false;
   updateButtonState(otherParty);
 }
+
+//Video recording
 function endRecording() {
     if( selfRecorder ) {
        selfRecorder.stop();
@@ -105,8 +96,6 @@ function endRecording() {
     document.getElementById("startRecording").disabled = false;
     document.getElementById("stopRecording").disabled = true;
 }
-
-//Video recording
 
 function startRecording() {
     var selfLink = document.getElementById("selfDownloadLink");
