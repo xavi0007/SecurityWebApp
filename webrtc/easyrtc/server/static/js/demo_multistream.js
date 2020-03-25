@@ -49,7 +49,7 @@ function createMediaStream() {
             function(stream) {
                 createMediaStreamGui(stream, streamName);
                 if( otherEasyrtcid) {
-                    easyrtc=.addStreamToCall(otherEasyrtcid, streamName, function(easyrtcid, streamName){
+                    easyrtc.addStreamToCall(otherEasyrtcid, streamName, function(easyrtcid, streamName){
                         easyrtc.showError("Informational", "other party " + easyrtcid + " acknowledges receiving " + streamName);
                     });
                 }
