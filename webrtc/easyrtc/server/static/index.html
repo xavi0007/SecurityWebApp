@@ -3,11 +3,13 @@
         <head>
           <title="Teleconferencing"/>
             <link rel="stylesheet" type="text/css" href="css/easyrtc.css" />
+            <link rel="stylesheet" type="text/css" href="css/demo4.css" />
+
             <script src="/socket.io/socket.io.js"></script>
             <script type="text/javascript" src="js/easyrtc.js"></script>
             <script type="text/javascript" src="js/easyrtc_recorder.js"></script>
             <script type="text/javascript" src="js/main.js"></script>
-            <!-- <script type="text/javascript" src="js/demo_multistream.js"></script> -->
+
 
             <style type="text/css">
                 .alert img {
@@ -83,7 +85,6 @@
             <video id="caller" width="480" height="360" autoplay="autoplay" playsinline="playsinline" ></video>
             <br>
 
-
             <div id="ControlContainer">
               <div id="Controls">
                   <br>
@@ -93,6 +94,30 @@
                  download links for videos: self:<a id="selfDownloadLink"></a>
                   &nbsp;&nbsp;caller:<a id="callerDownloadLink"></a>
               </div>
+            </div>
+
+            <div id="demoContainer">
+                <div id="connectControls">
+                    <div id="iam">Not yet connected...</div>
+                    <br />
+                    <strong>Connected users:</strong>
+                    <div id="otherClients"></div>
+                </div>
+                <div id="videos">
+                    <video  autoplay="autoplay" id="selfVideo" class="easyrtcMirror"></video>
+                    <!-- each caller video needs to be in it's own div so
+                         it's close button can be positioned correctly
+                    -->
+                    <div style="position:relative;float:left;">
+                        <video autoplay="autoplay" playsinline="playsinline" id="callerVideo" class="callerVideo"></video>
+                    </div> <br>
+                    <div style="position:relative;float:left;">
+                        <video autoplay="autoplay" playsinline="playsinline" id="callerVideo2" class="callerVideo"></video>
+                    </div>
+                    <div style="position:relative;float:left;">
+                        <video autoplay="autoplay" playsinline="playsinline" id="callerVideo3" class="callerVideo"></video>
+                    </div>
+                </div>
             </div>
         </body>
     </html>

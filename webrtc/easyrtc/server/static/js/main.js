@@ -1,3 +1,4 @@
+//All rights reserved.
 
 var supportsRecording = easyrtc.supportsRecording();
 
@@ -11,15 +12,18 @@ function init() {
     window.alert("This browser does not support recording.");
   }
   easyrtc.enableDataChannels(true);
+  easyrtc.enableDebug(false);
   easyrtc.setDataChannelOpenListener(openListener);
   easyrtc.setDataChannelCloseListener(closeListener);
   easyrtc.setPeerListener(addToConversation);
   easyrtc.setRoomOccupantListener(loggedInListener);
-  easyrtc.easyApp("Company_Chat_Line", "self", ["caller"],
-    function(myId) {
-      console.log("My RTC id is " + myId);
-    }
-  );
+  // easyrtc.easyApp("Company_Chat_Line", "self", ["caller"],
+  //   function(myId) {
+  //     console.log("My RTC id is " + myId);
+  //   }
+  // );
+  easyrtc.easyApp("easyrtc.demo4", "selfVideo",
+     ["callerVideo", "callerVideo2", "callerVideo3"], loginSuccess, loginFailure);
 }
 
 function addToConversation(who, msgType, content) {
@@ -31,19 +35,25 @@ function addToConversation(who, msgType, content) {
     "<b>" + who + ":</b>&nbsp;" + content + "<br />";
 }
 
+//clear the list so that the next time it would be empty
+function clearConnectList() {
+    otherClientDiv = document.getElementById('otherClients');
+    while (otherClientDiv.hasChildNodes()) {
+        otherClientDiv.removeChild(otherClientDiv.lastChild);
+    }
+}
+
 function loggedInListener(roomName, otherPeers) {
   connectList = otherPeers;
 
   var otherClientDiv = document.getElementById('otherClients');
-  while (otherClientDiv.hasChildNodes()) {
-      otherClientDiv.removeChild(otherClientDiv.lastChild);
-  }
+  clearConnectList();
 
   var label, button;
+  //Create a button for each connected user
   for (var id in connectList) {
-
       var rowGroup = document.createElement("span");
-      //Button to Call
+      //Create button for Calling
       button = document.createElement('button');
       button.id = "connect_" + id;
       button.onclick = function(id) {
@@ -55,7 +65,7 @@ function loggedInListener(roomName, otherPeers) {
       button.appendChild(label);
       rowGroup.appendChild(button);
 
-      //Button to send message
+      //Create button to send message
       button = document.createElement('button');
       button.id = "send_" + id;
       button.onclick = function(id) {
@@ -75,6 +85,7 @@ function loggedInListener(roomName, otherPeers) {
   }
 }
 
+//Listners for data datachannel
 function openListener(otherParty) {
   channelIsActive[otherParty] = true;
   updateButtonState(otherParty);
@@ -85,7 +96,7 @@ function closeListener(otherParty) {
   updateButtonState(otherParty);
 }
 
-//Video recording
+//Video recording functions
 function endRecording() {
     if( selfRecorder ) {
        selfRecorder.stop();
@@ -146,45 +157,53 @@ function sendStuffP2P(otherID) {
     document.getElementById('sendMessageText').value = "";
 }
 
-
+//Calling function
 function performCall(otherID) {
-   if (easyrtc.getConnectStatus(otherID) === easyrtc.NOT_CONNECTED) {
-       try {
-       easyrtc.call(otherID,
-               function(caller, media) { // success callback
-                   if (media === 'datachannel') {
-                       // console.log("made call succesfully");
-                       connectList[otherID] = true;
-                   }
-               },
-               function(errorCode, errorText) {
-                   connectList[otherID] = false;
-                   easyrtc.showError(errorCode, errorText);
-               },
-               function(wasAccepted) {
-                   console.log("was accepted=" + wasAccepted);
-               }
-       );
-       }catch(callerror) {
-           console.log("call error ", callerror);
-       }
-   }
-   else {
-       easyrtc.showError("ALREADY-CONNECTED", "already connected to " + easyrtc.idToName(otherID));
-   }
+  if (easyrtc.getConnectStatus(otherID) === easyrtc.NOT_CONNECTED) {
+    try {
+      easyrtc.call(otherID,
+      //success callback
+      function(caller, media) {
+        if (media === 'datachannel') {
+        // console.log("made call succesfully");
+        connectList[otherID] = true;
+        }
+      },
+      //failure call back
+      function(errorCode, errorText) {
+        connectList[otherID] = false;
+        easyrtc.showError(errorCode, errorText);
+      },
+      //Accepted calll back
+      function(wasAccepted) {
+        console.log("was accepted=" + wasAccepted);
+        }
+      );
+    }catch(callerror) {
+      console.log("call error ", callerror);
+    }
+  }
+  else {
+    easyrtc.showError("ALREADY-CONNECTED", "already connected to " + easyrtc.idToName(otherID));
+  }
 }
 
-
+//Mostly for debugging purpose
 function loginSuccess(ID) {
     selfID = ID;
     document.getElementById("iam").innerHTML = "I am " + ID;
 }
-
-
+//Mostly for debugging purpose
 function loginFailure(errorCode, message) {
     easyrtc.showError(errorCode, "failure to login");
 }
 
+// Sets calls so they are automatically accepted (this is default behaviour)
+easyrtc.setAcceptChecker(function(easyrtcid, callback) {
+    callback(true);
+} );
+
+//GUI functions
 function updateButtonState(otherID) {
     var isConnected = channelIsActive[otherID];
     if(document.getElementById('connect_' + otherID)) {
