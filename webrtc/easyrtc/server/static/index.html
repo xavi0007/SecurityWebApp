@@ -7,7 +7,7 @@
             <script type="text/javascript" src="js/easyrtc.js"></script>
             <script type="text/javascript" src="js/easyrtc_recorder.js"></script>
             <script type="text/javascript" src="js/main.js"></script>
-            <script type="text/javascript" src="js/demo_multistream.js"></script>
+            <!-- <script type="text/javascript" src="js/demo_multistream.js"></script> -->
 
             <style type="text/css">
                 .alert img {
@@ -93,36 +93,6 @@
                  download links for videos: self:<a id="selfDownloadLink"></a>
                   &nbsp;&nbsp;caller:<a id="callerDownloadLink"></a>
               </div>
-              
-                <div id="Controls">
-                    <button id="connectButton" onclick="connect()">Connect</button>
-                    <button id="hangupButton" disabled="disabled" onclick="hangup()">Hangup</button>
-                    <div id="iam">Not yet connected...</div>
-                    <H3> Video sources</h3>
-                    <div id="videoSrcBlk">
-
-                    </div>
-                    <H3> Audio sources</h3>
-                    <div id="audioSrcBlk">
-
-                    </div>
-                    <br>
-                    <button onclick="createMediaStream();">Create Stream</button>
-                    <br />
-                    <strong>Connected users:</strong>
-                    <div id="otherClients"></div>
-                </div>
-
-                <div id="videos">
-                    <h3>Local media streams</h3>
-                    <div autoplay="autoplay" id="localVideos"></div>
-                    <h3>Remote media streams</h3>
-                    <div autoplay="autoplay" id="remoteVideos"></div>
-                    <div id="acceptCallBox"> <!-- Should be initially hidden using CSS -->
-                        <div id="acceptCallLabel"></div>
-                        <button id="callAcceptButton" >Accept</button> <button id="callRejectButton">Reject</button>
-                    </div>
-                </div>
             </div>
         </body>
     </html>
