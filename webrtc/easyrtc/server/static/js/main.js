@@ -96,6 +96,20 @@ function closeListener(otherParty) {
   updateButtonState(otherParty);
 }
 
+//mute functions
+var micDisabled = false;
+function muteMic(){
+  micDisabled = !micDisabled;
+  if(micDisabled == true){
+    easyrtc.enableMicrophone(false);
+  }
+  else{
+    easyrtc.enableMicrophone(true);
+  }
+}
+
+
+
 //Video recording functions
 function endRecording() {
     if( selfRecorder ) {
